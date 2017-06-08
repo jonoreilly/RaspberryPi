@@ -9,5 +9,6 @@ GPIO.setup(led, GPIO.OUT)
 
 GPIO.output(led, GPIO.HIGH)
 time.sleep(5)
+
 GPIO.output(led, GPIO.LOW)
 GPIO.cleanup()
