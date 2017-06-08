@@ -12,6 +12,9 @@ green = 21
 yellow = 20
 red = 16
 
+dist_gy = 25
+dist_yr = 10
+
 GPIO.setup(trig, GPIO.OUT)
 GPIO.setup(echo, GPIO.IN)
 GPIO.setup(green, GPIO.OUT)
@@ -58,9 +61,9 @@ while True:
     distance = get_distance()
     time.sleep(0.05)
 
-    if distance >= 9:
+    if distance >= dist_gy:
         green_light()
-    elif 9 > distance > 6:
+    elif dist_gy > distance > dist_yr:
         yellow_light()
-    elif 6 > distance
+    elif dist_yr > distance:
         red_light()
