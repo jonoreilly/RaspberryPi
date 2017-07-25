@@ -1,3 +1,3 @@
 # !bin/bash
 
-sudo chmod +x *.sh
+sudo chmod 777 *.sh
