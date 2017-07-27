@@ -1,0 +1,48 @@
+sudo nano /etc/modules :
+
+	lirc_dev
+
+	lirc_rpi gpio_in_pin=18 gpio_out_pin=17
+
+
+sudo nano /etc/lirc/hardware.conf :
+
+	LIRCD_ARGS="-uinput -listen"
+
+	DRIVER="default"
+
+	DEVICE="/dev/lirc0"
+
+	MODULES="lirc_rpi"
+
+
+sudo /etc/init.d/lirc stop
+
+sudo /etc/init.d/lirc start
+
+
+sudo nano /boot/config.txt :
+
+	dtoverlay=lirc-rpi,gpio_in_pin=18,gpio_out_pin=17
+
+
+
+mode2 -d /dev/lirc0      
+
+sudo /etc/init.d/lirc stop
+
+irrecord -list-namespace
+
+irrecord -d /dev/lirc0 ~/github/ir/conf/lircd.conf
+
+sudo cp ~/lircd.conf ~/github/ir/conf/lircd.conf
+
+sudo /etc/init.d/lirc restart
+
+irsend LIST <remote> <key>
+
+irsend SEND_ONCE <remote> <key>
+
+
+
+
