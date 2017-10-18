@@ -54,6 +54,7 @@ def mainloop(f, bus, maxnum):
 
 #desired frequency
 freq = 440 #440Hz = Do
+freq = input("440Hz for Do\n>>")
 anglspeed = 2*440*3.141592
 
 
