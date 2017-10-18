@@ -1,63 +1,79 @@
+import time
 import math
+import RPi.GPIO as GPIO
+
+#set GPIO
+GPIO.setwarnings(False)
+GPIO.cleanup()
+GPIO.setmode(GPIO.BCM)
+
+#pins [0] is the highest resistance(lowest significance) bit. pinstatus states pin values
+datapin = [21, 20, 16, 26, 19, 13]
+pinstatus = []
+for i in range(0, len(datapin)):
+    pinstatus.append(0)
+    GPIO.setup(datapin[i], GPIO.OUT)
 
 
-def divide(voltage, rl, rh):
-    return voltage*(rh/(rl+rh))
+#output function sets the datapins[] from a given array
+def writearray(data, bus):
+    global pinstatus
+    for i in range(0, len(bus)):
+        if data[i] and not pinstatus[i]:
+            GPIO.output(bus[i], GPIO.HIGH)
+            pinstatus[i] = int(data[i])
+        elif pinstatus[i] and not data[i]:
+            GPIO.output(bus[i], GPIO.LOW)
+            pinstatus[i] = int(data[i])
 
 
-digital = [0,0,0,0,0]
+#output function sends data array from numerical values
+def writenumber(number, bus):
+    listholder = list(str(bin(int(number))))
+    listholder.pop(0), listholder.pop(0)
+    finalist = []
+    for i in range(0, len(listholder)):
+        finalist.append(listholder[len(listholder)-(i+1)])
+    while len(bus) > len(finalist):
+        finalist.append(0)
+    writearray(finalist,bus)
 
-start = 100
-resistances = [start,start*2,start*4,start*8,start*16,start*32]
 
-rgnd = start*3
 
-gnd = 0
 
-vcc = 5
-old = vcc
-def mainloop():
-    global old
-    resistor = 0
-    for i in range (0,len(digital)):
-        if not digital[i]:
-            resistor += resistances[i]
-    if resistor == 0:
-        new = vcc
-        print(new)
-        old = float(new)
-    else:
-        new = divide(vcc-gnd, resistor, rgnd)
-        print(new, new-old)
-        old = float(new)
-
-def adddigit():
-    end = False
-    contar = 0
-    while not end:
-        if digital[contar]:
-            digital[contar] = 0
-            contar += 1
-        elif not digital[contar]:
-            digital[contar] = 1
-            end = True
-        if contar >= len(digital):
-            end = True
-            
-        
-
-def loopvalues():
-    counter = 0
+def mainloop(f, bus, maxnum):
+    start = time.time()
     while True:
-        mainloop()
-        adddigit()
-        if digital == [1,1,1,1,1]:
-            break
-        
-    
+        newtime = time.time()
+        number = (math.sin((newtime-start)*f)+1)*(maxnum/2)
+        number = number * (sizemult/2)
+        writenumber(number,bus)
 
-while True :
-    exec(input("mainloop() prints the analog value,\nloopvalues() to see the changes\nChange digital[] if u want\n"))
-            
+
+
+
+#desired frequency
+freq = 440 #440Hz = Do
+anglspeed = 2*440*3.141592
+
+
+
+#max number depending on bus size
+sizemult = 63  #6bits 
+
+
+mainloop(anglspeed, datapin, sizemult)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
