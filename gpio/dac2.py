@@ -32,10 +32,10 @@ class player (threading.Thread):
         for i in range(0, len(bus)):
             if pinstatus[i] and not self.laststatus[i]:
                 GPIO.output(bus[i], GPIO.HIGH)
-                self.laststatus[i] = int(data[i])
+                self.laststatus[i] = int(pinstatus[i])
             elif self.laststatus[i] and not pinstatus[i]:
                 GPIO.output(bus[i], GPIO.LOW)
-                self.laststatus[i] = int(data[i])
+                self.laststatus[i] = int(pinstatus[i])
 
     def writenumber(self):  #calculate GPIO from a frequency
         global freq
