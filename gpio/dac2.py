@@ -27,14 +27,15 @@ class player (threading.Thread):
         self.laststatus = list(pinstatus)
         threading.Thread.__init__(self)
         
-    def writearray(self, bus):  #write data from pinstatus to GPIO
+    def writearray(self):  #write data from pinstatus to GPIO
         global pinstatus
-        for i in range(0, len(bus)):
+        global datapin
+        for i in range(0, len(datapin)):
             if pinstatus[i] and not self.laststatus[i]:
-                GPIO.output(bus[i], GPIO.HIGH)
+                GPIO.output(datapin[i], GPIO.HIGH)
                 self.laststatus[i] = int(pinstatus[i])
             elif self.laststatus[i] and not pinstatus[i]:
-                GPIO.output(bus[i], GPIO.LOW)
+                GPIO.output(datapin[i], GPIO.LOW)
                 self.laststatus[i] = int(pinstatus[i])
 
     def writenumber(self):  #calculate GPIO from a frequency
@@ -50,13 +51,16 @@ class player (threading.Thread):
         while len(pinstatus) > len(finalist):
             finalist.append(0)
         pinstatus = list(finalist)
+
+
+        self.writearray()
     
 
     def run(self):
         global datapin
         if self.ID:
             while True:
-                self.writearray(datapin)
+                self.writearray()
         else:
             self.start = time.time()
             while True:
@@ -66,10 +70,10 @@ class player (threading.Thread):
 
 
 
-reproducer = player(1)
+#reproducer = player(1)
 calculator = player(0)
 
-reproducer.start()
+#reproducer.start()
 calculator.start()
 
 
