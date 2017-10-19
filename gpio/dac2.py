@@ -56,11 +56,11 @@ class player (threading.Thread):
         global datapin
         if self.ID:
             while True:
-                writearray(datapin)
+                self.writearray(datapin)
         else:
             self.start = time.time()
             while True:
-                writenumber()
+                self.writenumber()
             
         
 
