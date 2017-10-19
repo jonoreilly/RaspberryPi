@@ -76,7 +76,5 @@ calculator.start()
 while True:
     try:
         freq = int(input("440Hz is Do"))
-        
-
-
-
+    except KeyError:
+        print("EMPTY")
