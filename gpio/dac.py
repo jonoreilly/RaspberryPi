@@ -54,7 +54,7 @@ def mainloop(bus, maxnum):
 
 
 
-class thread (threading.Thread):
+class thread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
     def run(self):
@@ -62,6 +62,7 @@ class thread (threading.Thread):
         while True:
             time.sleep(1)
             freq = int(input("440Hz for Do\n>>"))
+            f = 2*freq*3.141592
 
 
 
