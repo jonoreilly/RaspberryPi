@@ -30,7 +30,7 @@ class player (threading.Thread):
     def writearray(self, bus):  #write data from pinstatus to GPIO
         global pinstatus
         for i in range(0, len(bus)):
-            if pinstatus[i] and not self.lasttatus[i]:
+            if pinstatus[i] and not self.laststatus[i]:
                 GPIO.output(bus[i], GPIO.HIGH)
                 self.laststatus[i] = int(data[i])
             elif self.laststatus[i] and not pinstatus[i]:
