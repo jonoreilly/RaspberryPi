@@ -54,7 +54,7 @@ class player (threading.Thread):
 
     def run(self):
         global datapin
-        if ID:
+        if self.ID:
             while True:
                 writearray(datapin)
         else:
