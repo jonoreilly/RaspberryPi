@@ -48,7 +48,6 @@ def mainloop(bus, maxnum):
     while True:
         newtime = time.time()
         number = (math.sin((newtime-start)*f)+1)*(maxnum/2)
-        number = number * (sizemult/2)
         writenumber(number,bus)
 
 
@@ -58,12 +57,13 @@ class thread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
     def run(self):
-        global freq
+        global f
         while True:
             time.sleep(1)
             freq = int(input("440Hz for Do\n>>"))
             f = 2*freq*3.141592
 
+            
 
 
 button = thread()
@@ -71,7 +71,7 @@ button.start()
 
 #desired frequency
 #freq = 440 #440Hz = Do
-freq = int(input("440Hz for Do\n>>"))
+freq = 440
 f = 2*freq*3.141592
 
 #max number depending on bus size
