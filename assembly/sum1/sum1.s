@@ -2,15 +2,15 @@
 
 	.data
 	.balign 4
+
 string:	.asciz "\na + b = %d\n"
 a:	.word	33
 b:	.word	44
-c:	.word	0	@ will contain a+b
+c:	.word	0		@ will contain a+b
 
-
-.text
-.global main
-.extern printf
+	.text
+	.global main
+	.extern printf
 
 main:
 	push	{ip, lr}	// push return address + dummy register
