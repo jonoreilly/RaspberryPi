@@ -35,6 +35,7 @@ def wait(mill):
         a = True
 #LCD commands
 def senddata (rs = True, msg = 0):
+    global datapin, epin, rspin
 
     #turn LOW all pins transfering
     GPIO.output(epin, GPIO.LOW)
