@@ -23,8 +23,9 @@ def setout(layout):
 
 def loop(layouts, delay):
 	for step in layouts:
+		start = time.time()
 		setout(step)
-#		print (time.time())
+		print (time.time()-start)
 		time.sleep(delay)
 
 
