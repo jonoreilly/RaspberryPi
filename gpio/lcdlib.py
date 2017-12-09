@@ -13,7 +13,7 @@ epin = 19
 GPIO.setup(epin, GPIO.OUT)
 
 #datapin[0] is physical pin [0] which is the lowest value bit (0-1)
-datapin = [21, 20, 16, 13, 6, 5, 12, 25]
+datapin = [21, 20, 16, 26, 19, 13, 6, 5]
 for i in range(0, len(datapin)):
     GPIO.setup(datapin[i], GPIO.OUT)
 
@@ -35,6 +35,7 @@ def wait(mill):
         a = True
 #LCD commands
 def senddata (rs = True, msg = 0):
+    global datapin, epin, rspin
 
     #turn LOW all pins transfering
     GPIO.output(epin, GPIO.LOW)
