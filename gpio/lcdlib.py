@@ -6,10 +6,10 @@ GPIO.cleanup()
 GPIO.setmode(GPIO.BCM)
 
 #set pins
-rspin = 26
+rspin = 12
 GPIO.setup(rspin, GPIO.OUT)
 
-epin = 19
+epin = 7
 GPIO.setup(epin, GPIO.OUT)
 
 #datapin[0] is physical pin [0] which is the lowest value bit (0-1)
@@ -19,15 +19,14 @@ for i in range(0, len(datapin)):
 
 #make a list of booleans with a number in hex or int
 def numtobus (number, size):
-	listy = list(str(bin(number)))
-	listy.pop(0), listy.pop(0)
-	while len(listy) < size:
-		listy.insert(0, "0")
+    listy = list(str(bin(number)))
+    listy.pop(0), listy.pop(0)
+    while len(listy) < size:
+        listy.insert(0, "0")
     finalist = []
-    for i in range(0, len(listy))
-        finalist.append(bool(bin(listy[i])))
+    for i in range(0, len(listy)):
+        finalist.append(bool(listy[i]))
     return finalist
-
 
 def wait(mill):
     start = time.time()
@@ -50,13 +49,13 @@ def senddata (rs = True, msg = 0):
     buslist = numtobus(msg, 8)
     for i in range(0, 8):
         if buslist[i]:
-            GPIO.output(datapin[7-i], HIGH)
+            GPIO.output(datapin[7-i], GPIO.HIGH)
     wait(100)
 
     #activate
-    GPIO.output(epin, HIGH)
+    GPIO.output(epin, GPIO.HIGH)
     wait(1)
-    GPIO.output(epin, LOW)
+    GPIO.output(epin, GPIO.LOW)
     wait(100)
 
 #prints a string to the screen
@@ -73,6 +72,12 @@ def clearscreen():
     senddata(False, cleardisplay)
     senddata(False, returnhome)
 
+def start():
+    senddata(False, cleardisplay)
+    senddata(False, bitmode8)
+    senddata(False, linemode2)
+    senddata(False, blinkon)
+
 
 #commands
 cleardisplay   = 0x01
@@ -82,6 +87,10 @@ displaycontrol = 0x08
 cursorshift    = 0x10
 moveright      = 0x04
 moveleft       = 0x00
+bitmode8       = 0x10
+blinkon        = 0x01
+cursoron       = 0x02
+linemode2      = 0x08
 
 #characters
 characters =   {"0": 0x30,
