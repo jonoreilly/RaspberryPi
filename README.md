@@ -7,4 +7,4 @@
 - testeos de lenguaje Ensamblador
 
 
-- <a href="myrpi.zapto.org">Servidor en Raspbery Pi</a>
+- <a href="http://myrpi.zapto.org">Servidor en Raspbery Pi</a>
